@@ -31,6 +31,11 @@ if __name__ == '__main__':
                 chsum += 1
     opt.write("%d sample, %d chars\n" % (chsum, catlog))
     for (k,v) in cal.items():
-        opt.write("%s -- %2d times,  %.2f%%\n" % (k.encode('GB2312'), v , 100.0 * v / chsum))
+        # opt.write("%s -- %2d times,  %.2f%%\n" % (k.encode('GB2312'), v , 100.0 * v / chsum))
+        opt.write(k.encode('GB2312') + " -- %2d times,  %.2f%%\n" % (v , 100.0 * v / chsum))
+    chdst = {}
+    for id in range(len(allch)):
+        chdst[allch[id]] = id
+    print chdst
     f = open('char.pki','w')
-    cPickle.dump(allch,f)
+    cPickle.dump(chdst,f)
