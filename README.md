@@ -45,11 +45,19 @@ python predictone.py pic.png
 
 ### cal.py
 
-统计当前目录下的中文文件信息
+统计当前目录下的中文文件信息，并输出整个list的二进制存档
 
 ### pull.py
 
 在指定网址循环下载图片
+
+### char.pki
+
+中文字符表的list的二进制文件
+
+### status.txt
+
+中文训练集统计信息
 
 ### *.rec
 
@@ -79,10 +87,10 @@ git remote add upstream https://github.com/tsstss123/CGZZT/
 ```
 git fetch upstream
 git merge upstream/master
-```	
+```
 
 [在github网页上更新的方法](https://www.zhihu.com/question/20393785/answer/30725725)
-	
+
 [fork后如何同步源的新更新](https://segmentfault.com/q/1010000002590371)
 
 向我提交代码,向我发起pull request即可
