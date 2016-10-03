@@ -45,7 +45,11 @@ python predictone.py pic.png
 
 ### cal.py
 
-统计当前目录下的中文文件信息，并输出整个list的二进制存档
+统计当前目录下的中文文件信息，并输出整个dist的二进制存档
+
+### div.py
+
+暴力分割当前目录下的中文图片并生成mxnet使用的lst文件
 
 ### pull.py
 
@@ -53,7 +57,7 @@ python predictone.py pic.png
 
 ### char.pki
 
-中文字符表的list的二进制文件
+中文字符表的dist的二进制文件
 
 ### status.txt
 
