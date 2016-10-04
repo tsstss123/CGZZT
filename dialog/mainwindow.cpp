@@ -71,7 +71,7 @@ void MainWindow::dropEvent(QDropEvent *event)
 
     QFileInfo fileInfo(fileName);
 
-    if(fileInfo.suffix() == QString(tr("png")))
+    if(fileInfo.suffix() == QString(tr("png")) || fileInfo.suffix() == QString(tr("jpg")))
     {
         qDebug() << "Find path = " << fileName;
         path = fileName;
@@ -90,7 +90,7 @@ void MainWindow::openFile()
     path = QFileDialog::getOpenFileName(this,
                                         tr("Open File"),
                                         ".",
-                                        tr("PNG Files(*.png)"));
+                                        tr("Image Files(*.jpg *.png)"));
     qDebug() << path;
     if(!path.isEmpty()) {
         picSelected();
@@ -102,7 +102,8 @@ void MainWindow::openFile()
 
 void MainWindow::setLabelPic()
 {
-    QPixmap pix(path);
+    QImage image(path);
+    QPixmap pix(QPixmap::fromImage(image));
     imageLabel->setPixmap(pix);
     imageLabel->setPixmap(pix.scaled(300,200));
     //
