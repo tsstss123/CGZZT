@@ -75,6 +75,16 @@ python predictone.py pic.png
 
 网络的参数权重
 
+## Mxnet Build tutorials
+
+sudo apt-get update
+sudo apt-get install -y build-essential git libatlas-base-dev libopencv-dev
+cd mxnet0531
+make -j$(nproc)
+sudo apt-get install python-opencv
+cd python
+sudo python setup.py install
+
 ## Git使用说明
 
 先本地设置好,fork一份到自己的仓库,用https方法clone一份到本机
