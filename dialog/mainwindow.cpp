@@ -13,6 +13,7 @@
 #include <QDragEnterEvent>
 #include <QMimeData>
 #include <QFileInfo>
+#include <QFont>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -22,7 +23,11 @@ MainWindow::MainWindow(QWidget *parent)
     imageLabel = new QLabel(widget);
     imageLabel->setGeometry(0,0,600,400);
 
+    QFont ft;
+    ft.setPointSize(36);
     ansLabel = new QLabel(widget);
+    ansLabel->setAlignment(Qt::AlignCenter);
+    ansLabel->setFont(ft);
 
     QVBoxLayout *layout = new QVBoxLayout;
     layout->addWidget(imageLabel);
@@ -105,7 +110,7 @@ void MainWindow::setLabelPic()
     QImage image(path);
     QPixmap pix(QPixmap::fromImage(image));
     imageLabel->setPixmap(pix);
-    imageLabel->setPixmap(pix.scaled(300,200));
+    imageLabel->setPixmap(pix.scaled(300,150));
     //
 }
 
@@ -119,6 +124,7 @@ void MainWindow::predict()
 
     connect(p,&QProcess::readyReadStandardOutput,[=]{
         QString ans = p->readAllStandardOutput();
+        ans = ans.trimmed();
         qDebug() << "Get " << ans;
         setAnsStr(ans);
     });
