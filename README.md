@@ -78,6 +78,7 @@ python predictone.py pic.png
 
 ## Mxnet Build tutorials
 
+```
 sudo apt-get update
 sudo apt-get install -y build-essential git libatlas-base-dev libopencv-dev
 cd mxnet0531
@@ -85,6 +86,7 @@ make -j$(nproc)
 sudo apt-get install python-opencv
 cd python
 sudo python setup.py install
+```
 
 ## Git使用说明
 
