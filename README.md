@@ -33,7 +33,8 @@ python predictone.py pic.png
 
 ### predictone.py
 
-对单张图片进行预测
+若不加参数则为预测当前目录所有图片，并将结果与文件名比较
+-file参数为预测指定图片
 
 ### im2rec.py
 

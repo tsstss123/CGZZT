@@ -1,7 +1,15 @@
 import cv2
 import numpy as np
 import mxnet as mx
+from os import walk
 import argparse
+
+def get_all_dir_files():
+    f = []
+    for (dirpath, dirnames, filenames) in walk('.'):
+        f.extend(filenames)
+        break
+    return f
 
 def guass(image_path):
     src = cv2.imread(image_path,cv2.IMREAD_GRAYSCALE)
@@ -57,15 +65,33 @@ def predict(mod,name):
     return ans
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
-        description='Predict one picture')
-    parser.add_argument('name',type=str,help='Picture name')
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-file',type=str,default='',help='Picture name')
     args = parser.parse_args()
 
-    if args.name == None:
-        print('No file input')
+    mod = load_model()
+    if args.file == '' or args.file == None:
+        sucscnt = 0
+        failcnt = 0
+        files = get_all_dir_files()
+        for fname in files:
+            if len(fname.split('.')) != 2:
+                continue
+            prefix, suffix = fname.split('.')
+            if suffix != 'png' and suffix != 'jpg':
+                continue
+            if len(prefix) != 4:
+                continue
+            strlist = predict(mod,fname)
+            ans = ''.join(strlist)
+            if ans.upper() == prefix.upper():
+                sucscnt += 1
+                print(fname + " pass")
+            else:
+                failcnt += 1
+                print(fname + " fail")
+
+        print("%.2f passed" % (sucscnt * 1.0 / (sucscnt + failcnt)))
     else:
-        mod = load_model()
-        ans = predict(mod,args.name)
+        ans = predict(mod,args.file)
         print("%c%c%c%c" % (ans[0],ans[1],ans[2],ans[3]))

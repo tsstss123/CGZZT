@@ -120,8 +120,9 @@ void MainWindow::predict()
     QString command = "python";
     QStringList args;
     args.append("predictone.py");
+    args.append("-file");
     args.append(path);
-
+    qDebug() << args;
     connect(p,&QProcess::readyReadStandardOutput,[=]{
         QString ans = p->readAllStandardOutput();
         ans = ans.trimmed();
