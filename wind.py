@@ -35,13 +35,27 @@ class Example(QWidget):
 
         # lcd = QLCDNumber(self)
         # sld = QSlider(Qt.Horizontal, self)
-        btn1 = QPushButton("Yes", self)
-        btn2 = QPushButton("No", self)
-        btn3 = QPushButton("WTF", self)
+        btn1 = QPushButton("RIGHT", self)
+        btn2 = QPushButton("WRONG", self)
+        btn3 = QPushButton("W T F", self)
         self.label = QLabel(self)
+        self.label.setAlignment(Qt.AlignCenter)
         self.picLabel = QLabel(self)
-        self.picLabel.setPixmap(QPixmap('temp.jpg'))
+        # self.picLabel.setPixmap(QPixmap('temp.jpg'))
+        self.picLabel.setAlignment(Qt.AlignCenter)
         self.ansLabel = QLabel(self)
+        self.ansLabel.setAlignment(Qt.AlignCenter)
+
+        font_20pix = QFont()
+        font_20pix.setPixelSize(20)
+        font_48pix = QFont()
+        font_48pix.setPixelSize(48)
+
+        btn1.setFont(font_20pix)
+        btn2.setFont(font_20pix)
+        btn3.setFont(font_20pix)
+        self.label.setFont(font_20pix)
+        self.ansLabel.setFont(font_48pix)
 
 
         vbox = QVBoxLayout()
@@ -59,12 +73,15 @@ class Example(QWidget):
 
         self.setGeometry(300, 300, 250, 150)
         self.setWindowTitle('Predict')
+
+        self.renewtext()
         self.show()
 
     def renewtext(self):
-        self.label.setText("%2.0f%% in %d pic" % (100.0 * self.sCnt / (self.sCnt + self.fCnt), self.sCnt + self.fCnt))
+        if (self.sCnt + self.fCnt > 0):
+            self.label.setText("%2.0f%% in %d pic" % (100.0 * self.sCnt / (self.sCnt + self.fCnt), self.sCnt + self.fCnt))
         pullPic('temp.jpg')
-        self.picLabel.setPixmap(QPixmap('temp.jpg'))
+        self.picLabel.setPixmap(QPixmap('temp.jpg').scaled(200,80))
         ans = Predict()
         self.ansLabel.setText(ans)
         
@@ -116,7 +133,7 @@ def Predict():
     two = src[0:40,30:70,:]
     three = src[0:40,60:100,:]
     ans = [predictSingle(one),predictSingle(two),predictSingle(three)]
-    return str(ans)
+    return ''.join(ans)
     
 
 
