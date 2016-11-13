@@ -1,12 +1,19 @@
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import (QWidget, QLCDNumber, QSlider,
-    QVBoxLayout, QApplication, QPushButton, QLabel)
+try:
+    from PyQt5.QtCore import *
+    from PyQt5.QtGui import *
+    from PyQt5.QtWidgets import (QWidget, QLCDNumber, QSlider,QVBoxLayout, QApplication, QPushButton, QLabel)
+except ImportError:
+    from PyQt4.QtCore import *
+    from PyQt4.QtGui import *
+
+try:
+    import _pickle as cPickle
+    import urllib.request as url
+except ImportError:
+    import cPickle
+    import urllib as url
 
 import sys
-import _pickle as cPickle
-import urllib.request
-
 import mxnet as mx
 import numpy as np
 import cv2
@@ -26,8 +33,10 @@ class Example(QWidget):
     sCnt = 0
     fCnt = 0
     def __init__(self):
-        super().__init__()
-
+        if sys.version > '3':
+            super().__init__()
+        else:
+            super(QWidget, self).__init__()
         self.initUI()
 
 
@@ -81,7 +90,12 @@ class Example(QWidget):
         if (self.sCnt + self.fCnt > 0):
             self.label.setText("%2.0f%% in %d pic" % (100.0 * self.sCnt / (self.sCnt + self.fCnt), self.sCnt + self.fCnt))
         pullPic('temp.jpg')
-        self.picLabel.setPixmap(QPixmap('temp.jpg').scaled(200,80))
+        if sys.version > '3':
+            self.picLabel.setPixmap(QPixmap('temp.jpg').scaled(200,80))
+        else:
+            oimg = cv2.imread('temp.jpg')
+            cv2.imwrite('temp.png', oimg)
+            self.picLabel.setPixmap(QPixmap('temp.png').scaled(200,80))
         ans = Predict()
         self.ansLabel.setText(ans)
         
@@ -102,7 +116,7 @@ class Example(QWidget):
 webpath = r'http://cab2b.travelsky.com/cab2b/VerificationCode.do'
 
 def pullPic(path):
-    urllib.request.urlretrieve(webpath, path)
+    url.urlretrieve(webpath, path)
 
 def predictSingle(pic):
     assert(pic.shape == (40,40,3))
@@ -118,7 +132,8 @@ def predictSingle(pic):
     dataiter = mx.io.NDArrayIter(bp)
     prob = mod.predict(dataiter)
     # print prob
-    py = np.argmax(prob,axis = 1) 
+    py = np.argmax(prob,axis = 1)
+    print(np.amax(prob,axis = 1)) 
     id = py[0]
     print(id)
     for (ch,idx) in chdst.items():
@@ -133,7 +148,7 @@ def Predict():
     two = src[0:40,30:70,:]
     three = src[0:40,60:100,:]
     ans = [predictSingle(one),predictSingle(two),predictSingle(three)]
-    return ''.join(ans)
+    return ' '.join(ans)
     
 
 

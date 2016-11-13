@@ -3,89 +3,41 @@ A dirty deal between three beautiful sister and an uncle
 
 ## 工具准备
 
-- [Mxnet](https://github.com/dmlc/mxnet/releases)
+- [Mxnet](https://github.com/dmlc/mxnet/releases) (win7-64版本见目录内附使用方法)
 - Anaconda2
 - cv2 (conda install -c https://conda.binstar.org/menpo opencv)
 
-## 使用说明
-
-先确定mxnet以及cv2正确安装
-
-```
-python predictone.py pic.png
-```
-
-![image](https://github.com/tsstss123/CGZZT/raw/master/screenshot.png)
-
 ## 代码说明
 
-### inception-bn-28.py
+### wind.py
 
-我们采用一个小型的28*28的inception-bn网络
+启动一个GUI展示预测功能(需要网络，自动从网站上下载并预测，人工统计正确率）
 
-### conv.py
+### -symbol.json
 
-进行训练的代码，参数在文件里面调（改成参数怕更不直观...）
+网络结构
 
-### predict.py
+### .params
 
-用模型文件进行预测
-
-### predictone.py
-
-若不加参数则为预测当前目录所有图片，并将结果与文件名比较
--file参数为预测指定图片
-
-### im2rec.py
-
-进过简单修改的mxnet提供的将图片制作成二进制格式训练集的工具，原版有些问题
-
-### showRec.py
-
-提取二进制格式训练集中的图片的工具，查看训练集是否制作正确
-
-### cal.py
-
-统计当前目录下的中文文件信息，并输出整个dist的二进制存档
-
-### div.py
-
-暴力分割当前目录下的中文图片并生成mxnet使用的lst文件
-
-### pull.py
-
-在指定网址循环下载图片
+网络参数
 
 ### char.pki
 
-中文字符表的dist的二进制文件
-
-### status.txt
-
-中文训练集统计信息
-
-### *.rec
-
-二进制格式训练集
-
-### *-symbol.json
-
-网络的json格式
-
-### *.params
-
-网络的参数权重
+字符编号
 
 ## Mxnet Build tutorials
 
 ```
-sudo apt-get update
-sudo apt-get install -y build-essential git libatlas-base-dev libopencv-dev
-cd mxnet0531
-make -j$(nproc)
-sudo apt-get install python-opencv
-cd python
-sudo python setup.py install
+# Clone mxnet repository. In terminal, run the commands WITHOUT "sudo"
+git clone https://github.com/dmlc/mxnet.git ~/MXNet/mxnet --recursive
+
+# Install MXNet dependencies
+cd ~/MXNet/mxnet/setup-utils
+bash install-mxnet-ubuntu.sh
+
+# We have added MXNet Python package path in your ~/.bashrc. 
+# Run below command to refresh environment variables.
+$ source ~/.bashrc
 ```
 
 ## Git使用说明
