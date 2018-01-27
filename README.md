@@ -1,5 +1,5 @@
 # CGZZT
-A dirty deal between three beautiful sister and an uncle
+a simple Chinese CAPTCHA Recognition Tool
 
 ## 工具准备
 
